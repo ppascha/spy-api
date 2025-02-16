@@ -1,0 +1,61 @@
+services:
+  postgres_db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yourpassword
+      - POSTGRES_DB=spy_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Ensure the init.sql is mounted correctly
+    networks:
+      - laravel_network
+
+  redis_cache:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - 6379:6379
+    networks:
+      - laravel_network
+
+  laravel_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    environment:
+      - APP_ENV=local
+      - APP_KEY=somekey
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres_db
+      - DB_PORT=5432
+      - DB_DATABASE=spy_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=yourpassword
+    volumes:
+      - .:/var/www
+    networks:
+      - laravel_network
+    depends_on:
+      - postgres_db
+      - redis_cache
+
+  nginx_server:
+    image: nginx:alpine
+    container_name: nginx_server
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www
+    ports:
+      - 8000:80
+    networks:
+      - laravel_network
+    depends_on:
+      - laravel_app
+
+networks:
+  laravel_network:
+    driver: bridge

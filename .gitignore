@@ -1,0 +1,53 @@
+# Node and package dependencies
+/node_modules
+/npm-debug.log
+/yarn-error.log
+/package-lock.json
+/pnpm-lock.yaml
+
+# Build assets
+/public/build
+/public/hot
+
+# Laravel storage and cache
+/storage/
+!storage/.gitignore  # Keep this file to maintain the directory structure
+/bootstrap/cache/
+bootstrap/cache/*.php
+
+# Ignore environment files (Secrets & Configs)
+.env
+.env.*
+.env.backup
+.env.production
+.env.testing
+.env.local
+.env.example
+
+# Logs and debug files
+*.log
+storage/logs/
+storage/framework/views/*.php
+storage/framework/cache/*.php
+storage/framework/sessions/*.php
+.phpunit.result.cache
+
+# IDE and Editor settings
+/.idea
+/.vscode
+/.fleet
+
+# Homestead and Docker files
+Homestead.json
+Homestead.yaml
+docker-compose.override.yml
+
+# Composer files (cache/auth files)
+/vendor
+/composer.lock
+/composer.phar
+auth.json
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
