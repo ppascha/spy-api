@@ -2,6 +2,7 @@ services:
   postgres_db:
     image: postgres:15
     container_name: postgres_db
+    restart: always  # Ensures database restarts if the container stops
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=yourpassword
@@ -9,13 +10,15 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Ensure the init.sql is mounted correctly
+      - postgres_data:/var/lib/postgresql/data  # Persistent storage for database
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Ensures schema/data initialization
     networks:
       - laravel_network
 
   redis_cache:
     image: redis:alpine
     container_name: redis_cache
+    restart: always
     ports:
       - 6379:6379
     networks:
@@ -26,6 +29,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel_app
+    restart: always
     environment:
       - APP_ENV=local
       - APP_KEY=somekey
@@ -46,6 +50,7 @@ services:
   nginx_server:
     image: nginx:alpine
     container_name: nginx_server
+    restart: always
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - .:/var/www
@@ -59,3 +64,6 @@ services:
 networks:
   laravel_network:
     driver: bridge
+
+volumes:
+  postgres_data:  # Persistent volume for PostgreSQL
