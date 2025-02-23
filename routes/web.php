@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SpyController;
+use App\Http\Controllers\AgencyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/spies', [SpyController::class, 'index'])->name('spies.index');
+Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');

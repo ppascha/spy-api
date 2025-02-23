@@ -32,7 +32,7 @@ services:
     restart: always
     environment:
       - APP_ENV=local
-      - APP_KEY=somekey
+      - APP_KEY=base64:UyKmFEHc8QJ0fjOXgzmB7DkfQ+EbaGE4rGR0fNVTk24=
       - DB_CONNECTION=pgsql
       - DB_HOST=postgres_db
       - DB_PORT=5432
