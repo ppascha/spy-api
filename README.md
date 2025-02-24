@@ -27,6 +27,7 @@ cp .env.example .env
 
 Generate the application key by running the following command
 php artisan key:generate
+Potential error php artisan key:generate needs an existing key to work. Fill the APP_KEY with 32 characters and rerun the command to make it work
 
 Once you have generated your app key, it should appear in your .env file like so
 APP_KEY=base64:YOUR_GENERATED_KEY_HERE
