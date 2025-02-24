@@ -92,7 +92,20 @@ class SpyController extends Controller
 
         $spies = $query->paginate(10);
 
-        return response()->json($spies);
+        return response()->json([
+            'data' => $spies->items(),
+            'links' => [
+                'first' => $spies->url(1),
+                'last' => $spies->url($spies->lastPage()),
+                'prev' => $spies->previousPageUrl(),
+                'next' => $spies->nextPageUrl(),
+            ],
+            'meta' => [
+                'current_page' => $spies->currentPage(),
+                'per_page' => $spies->perPage(),
+                'total' => $spies->total(),
+            ],
+        ]);
     }
 
     /**
@@ -101,6 +114,25 @@ class SpyController extends Controller
     public function random()
     {
         $spies = Spy::inRandomOrder()->limit(5)->get();
-        return response()->json($spies);
+
+        return response()->json([
+            'data' => $spies,
+        ]);
+    }
+
+    /**
+     * Delete a spy by ID.
+     */
+    public function destroy($id)
+    {
+        $spy = Spy::find($id);
+
+        if (!$spy) {
+            return response()->json(['message' => 'Spy not found.'], 404);
+        }
+
+        $spy->delete();
+
+        return response()->json(['message' => 'Spy deleted successfully.'], 200);
     }
 }

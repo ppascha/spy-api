@@ -21,6 +21,10 @@ class AgencySeeder extends Seeder
 
       Agency::create([
             'name' => 'GOVERMENT',
-        ]);
+      ]);
+
+      Agency::create([
+            'name' => 'UK',
+      ]);
     }
 }

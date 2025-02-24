@@ -1,3 +1,4 @@
+# Use PHP 8.3 FPM image as the base
 FROM php:8.3-fpm
 
 # Install system dependencies and PHP extensions
@@ -12,17 +13,18 @@ RUN apt-get update && apt-get install -y \
     && docker-php-source delete \
     && rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-# Install Composer
+# Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www
 
-# Copy Laravel project
 COPY . .
 
-# Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Expose port
+# Expose port 9000 for PHP-FPM
 EXPOSE 9000
+
+RUN composer install --no-dev --optimize-autoloader
+
+CMD ["php-fpm"]

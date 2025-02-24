@@ -27,3 +27,4 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::get('spies/random', [SpyController::class, 'random'])->middleware('throttle:random-spies');   // Random Spies (Rate limited)
 Route::get('spies', [SpyController::class, 'index']);           // List Paginated Spies
+Route::delete('/spies/{id}', [SpyController::class, 'destroy']);
