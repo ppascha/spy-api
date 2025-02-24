@@ -9,8 +9,6 @@
 
 /storage/
 !storage/.gitignore  # Keep this file to maintain the directory structure
-/bootstrap/cache/
-bootstrap/cache/*.php
 
 # Ignore environment files
 .env

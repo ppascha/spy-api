@@ -12,7 +12,7 @@ API testing with Postman and unit tests
 ## Installation
 
 Clone this repository to your local machine:
-git clone <repo-url>
+git clone https://github.com/ppascha/spy-api.git
 
 Navigate to the project directory:
 cd <project-directory>
@@ -25,10 +25,16 @@ cp .env.example .env
 
 ### Environment Setup
 
+Generate the application key by running the following command
+php artisan key:generate
+
+Once you have generated your app key, it should appear in your .env file like so
+APP_KEY=base64:YOUR_GENERATED_KEY_HERE
+
 Make sure to configure the following settings in your .env file according to your local setup
 APP_NAME=Laravel
 APP_ENV=local
-APP_KEY=base64:UyKmFEHc8QJ0fjOXgzmB7DkfQ+EbaGE4rGR0fNVTk24=
+APP_KEY=
 APP_DEBUG=true
 APP_URL=http://localhost:8000
 APP_CIPHER=AES-256-CBC
@@ -67,3 +73,18 @@ php artisan db:seed
 Run tests
 php artisan test
 
+### Postman Collection
+
+To test the API endpoints, you can use the included Postman collection:
+
+Navigate to the `postman` directory and import the `spy-api.postman_collection.json` file into Postman
+
+#### Notes on how I would improve the system
+Seed Data in App via Factories
+Test All App Functions
+Test Authenticated Functions with a Test Database
+Dockerize Your Testing Environment
+API Documentation with Swagger
+On Spy creation send a Notification
+Prevent deletion of spies if associated with open missions
+Exception Handling
