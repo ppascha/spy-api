@@ -7,9 +7,6 @@
 /public/build
 /public/hot
 
-/storage/
-!storage/.gitignore  # Keep this file to maintain the directory structure
-
 # Ignore environment files
 .env
 .env.*
